@@ -1,0 +1,10 @@
+require('dotenv').config();
+const app = require('../dist/app');
+const http = require('http');
+const https = require('https');
+
+const httpPort = process.env.HTTP_PORT;
+const httpsPort = process.env.HTTPS_PORT;
+
+const httpServer = http.createServer(app).listen(httpPort, () => { });
+const httpsServer = https.createServer(app).listen(httpsPort, () => { });
