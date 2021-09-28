@@ -16,13 +16,17 @@ export class RegistrationRepository extends Model implements IRegistrationReposi
             const [rows] = await this.connection.execute(sql, params);
             await this.connection.commit();
 
-            // TODO 新規作成したデータを返すようにする
-            const result = rows ? true : false;
-
-            return result;
+            return rows ? true : false;
         } catch (error) {
+            // MySQLが出力したエラーをハンドリグする
             this.connection.rollback();
-            throw error;
+            const code = error.error;
+            switch (code) {
+                case 'ER_DUP_ENTRY':
+                    throw { status: 400, code, message: 'Duplicate entry error.' };
+                default:
+                    throw { status: 500, code, message: 'unexpected DB error.' };
+            }
         }
     }
 
@@ -48,7 +52,12 @@ export class RegistrationRepository extends Model implements IRegistrationReposi
 
             return result;
         } catch (error) {
-            throw error;
+            // MySQLが出力したエラーをハンドリグする
+            const code = error.error;
+            switch (code) {
+                default:
+                    throw { status: 500, code, message: 'unexpected DB error.' };
+            }
         }
     }
     public update() {

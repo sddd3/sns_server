@@ -55,45 +55,24 @@ export class Register extends Api {
 
             this.res.status(200).end();
         } catch (error) {
-            if (!error) {
-                this.res.statusCode = 500;
-                this.res.json({ status: 500, message: 'unexpected error.' });
-                return;
-            }
-            // true: DBエラー false: 独自にハンドリングしているエラー
-            if (error.code) {
-                this.dbErrorHandler(error.code);
-            } else {
-                this.errorHandler(error);
-            }
-
+            this.errorHandler(error);
             return;
         }
     }
 
     /**
-     * MySQLが出力したエラーをハンドリグする
-     * @param code MySQLが出力するエラーコード
-     */
-    private dbErrorHandler(code: string): void {
-        switch (code) {
-            case 'ER_DUP_ENTRY':
-                this.res.statusCode = 400;
-                this.res.json({ code, message: 'Duplicate entry error.' });
-                break;
-            default:
-                this.res.statusCode = 500;
-                this.res.json({ status: 500, message: 'unexpected DB error.' });
-        }
-    }
-
-    /**
-     * 独自にチェックしているエラーをハンドリングする
+     * エラー情報をレスポンスオブジェクトにセットする
      * @param error
      */
     private errorHandler(error: any): void {
-        this.res.statusCode = error.status;
-        this.res.json({ message: error.message });
+        if (error) {
+            this.res.statusCode = error.status;
+            this.res.json({ message: error.message });
+        } else {
+            this.res.statusCode = 500;
+            this.res.json({ message: 'unexpected error.' });
+        }
+        return;
     }
 
 }
