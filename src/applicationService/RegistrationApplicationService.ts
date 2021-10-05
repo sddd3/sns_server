@@ -6,7 +6,7 @@ import { Salt } from "../domainObjects/User/Salt";
 import { RegistrationRepository } from "../repository/RegistrationRepository";
 import { IMysqlResult } from "../interface/IMysqlResult";
 
-export class RegistratorService {
+export class RegistrationApplicationService {
     // 登録情報リポジトリー
     private repository: RegistrationRepository;
 

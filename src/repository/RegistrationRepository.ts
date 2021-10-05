@@ -20,7 +20,7 @@ export class RegistrationRepository extends Model implements IRegistrationReposi
         } catch (error) {
             // MySQLが出力したエラーをハンドリグする
             this.connection.rollback();
-            const code = error.error;
+            const code = error.code;
             switch (code) {
                 case 'ER_DUP_ENTRY':
                     throw { status: 400, code, message: 'Duplicate entry error.' };

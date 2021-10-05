@@ -3,7 +3,7 @@ import { UserName } from "../domainObjects/User/UserName";
 import { UserNickName } from "../domainObjects/User/UserNickName";
 import { ProfileRepository } from "../repository/ProfileRepository";
 
-export class ProfileService {
+export class ProfileApplicationService {
     // プロフィールリポジトリー
     private repository: ProfileRepository;
 

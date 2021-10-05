@@ -13,6 +13,7 @@ import { Registration } from './api/v1/registration/Registration';
 
 const app = express();
 app.use(cors());
+app.use(cors({origin: '*', credentials: true}));
 app.use(express.json({ limit: '20mb' }));
 app.use(cookieParser());
 app.use(helmet());

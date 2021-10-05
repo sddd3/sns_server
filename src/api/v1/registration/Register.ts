@@ -11,8 +11,8 @@ import { UserNickName } from '../../../domainObjects/User/UserNickName';
 import { UuidGenerator } from '../../../applicationService/UuidGenerator';
 import { HashPasswordGenerator } from '../../../applicationService/HashPasswordGenerator';
 
-import { RegistratorService } from '../../../domainService/RegistrationService';
-import { ProfileService } from '../../../domainService/ProfileService';
+import { RegistrationApplicationService } from '../../../applicationService/RegistrationApplicationService';
+import { ProfileApplicationService } from '../../../applicationService/ProfileApplicationService';
 import { RegistrationRepository } from '../../../repository/RegistrationRepository';
 import { ProfileRepository } from '../../../repository/ProfileRepository';
 
@@ -46,12 +46,12 @@ export class Register extends Api {
 
             // 新規ユーザー登録
             const registrationRepository = new RegistrationRepository();
-            const registratorService = new RegistratorService(registrationRepository);
-            await registratorService.create(uuid, email, hashPassword, salt);
+            const registrationApplicationService = new RegistrationApplicationService(registrationRepository);
+            await registrationApplicationService.create(uuid, email, hashPassword, salt);
             // プロフィール情報のnullが許されないカラムだけ先行して登録
             const profileRepository = new ProfileRepository();
-            const profileService = new ProfileService(profileRepository);
-            await profileService.create(uuid, name, nickname);
+            const profileApplicationService = new ProfileApplicationService(profileRepository);
+            await profileApplicationService.create(uuid, name, nickname);
 
             this.res.status(200).end();
         } catch (error) {
