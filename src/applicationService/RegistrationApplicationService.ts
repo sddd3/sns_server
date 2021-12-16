@@ -1,10 +1,9 @@
-import { Uuid } from "../domainObjects/User/Uuid";
-import { Email } from "../domainObjects/User/Email";
-import { HashPassword } from "../domainObjects/User/HashPassword";
-import { Salt } from "../domainObjects/User/Salt";
+import { Uuid } from "../domainObjects/user/Uuid";
+import { Email } from "../domainObjects/user/Email";
+import { HashPassword } from "../domainObjects/user/HashPassword";
+import { Salt } from "../domainObjects/user/Salt";
 
 import { RegistrationRepository } from "../repository/RegistrationRepository";
-import { IMysqlResult } from "../interface/IMysqlResult";
 
 export class RegistrationApplicationService {
     // 登録情報リポジトリー

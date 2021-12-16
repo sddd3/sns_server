@@ -2,14 +2,11 @@ CREATE TABLE profiles (
     `profile_id` BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
     `uuid` VARCHAR(100) NOT NULL UNIQUE,
     `name` VARCHAR(100) NOT NULL UNIQUE,
-    `nickname` VARCHAR(100) NOT NULL,
-    `location` VARCHAR(100),
     `self_introduction` VARCHAR(100),
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `delete_flg` TINYINT UNSIGNED NOT NULL DEFAULT 0,
     PRIMARY KEY (profile_id),
-    FOREIGN KEY (uuid)
-    REFERENCES registrations (uuid)
+    FOREIGN KEY (uuid) REFERENCES registrations (uuid)
     ON DELETE CASCADE
 )ENGINE=InnoDB;

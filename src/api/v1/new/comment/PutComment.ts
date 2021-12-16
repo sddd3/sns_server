@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { Api } from '../../../common/Api';
+import { Api } from '../../../../common/Api';
 
-export class SignOut extends Api {
+export class PutComment extends Api {
     constructor(req: Request, res: Response, next: NextFunction) { super(req, res, next); }
 
     public async main() {

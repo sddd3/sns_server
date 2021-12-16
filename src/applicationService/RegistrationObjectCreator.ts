@@ -1,8 +1,8 @@
-import { Email } from "../domainObjects/User/Email";
-import { HashPassword } from "../domainObjects/User/HashPassword";
-import { Registration } from "../domainObjects/User/Registration";
-import { Salt } from "../domainObjects/User/Salt";
-import { Uuid } from "../domainObjects/User/Uuid";
+import { Email } from "../domainObjects/user/Email";
+import { HashPassword } from "../domainObjects/user/HashPassword";
+import { Registration } from "../domainObjects/user/Registration";
+import { Salt } from "../domainObjects/user/Salt";
+import { Uuid } from "../domainObjects/user/Uuid";
 import { RegistrationRepository } from "../repository/RegistrationRepository";
 
 

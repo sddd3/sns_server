@@ -39,7 +39,8 @@ export const PASSWORD_MAX_LENGTH = 32;
 export const USER_NAME_MIN_LENGTH = 3;
 /** ユーザー名の最長文字数 */
 export const USER_NAME_MAX_LENGTH = 16;
-/** ユーザーのニックネームの最短文字数 */
-export const USER_NICKNAME_MIN_LENGTH = 3;
-/** ユーザーのニックネームの最長文字数 */
-export const USER_NICKNAME_MAX_LENGTH = 16;
+/** ▼▼▼▼▼▼▼▼▼▼▼ コメント情報 ▼▼▼▼▼▼▼▼▼▼▼ */
+/** コメントの最短文字数 */
+export const COMMENT_MIN_LENGTH = 1;
+/** コメントの最長文字数 */
+export const COMMENT_MAX_LENGTH = 250;

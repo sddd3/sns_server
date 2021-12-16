@@ -1,10 +1,9 @@
-import { Salt } from "../domainObjects/User/Salt";
-import { Email } from "../domainObjects/User/Email";
-import { HashPassword } from "../domainObjects/User/HashPassword";
-import { Password } from "../domainObjects/User/Password";
-import { UserName } from "../domainObjects/User/UserName";
-import { UserNickName } from "../domainObjects/User/UserNickName";
-import { Uuid } from "../domainObjects/User/Uuid";
+import { Salt } from "../domainObjects/user/Salt";
+import { Email } from "../domainObjects/user/Email";
+import { HashPassword } from "../domainObjects/user/HashPassword";
+import { Password } from "../domainObjects/user/Password";
+import { UserName } from "../domainObjects/user/UserName";
+import { Uuid } from "../domainObjects/user/Uuid";
 
 export interface IUser {
     /** ユーザーを一意に決めるID */
@@ -17,12 +16,8 @@ export interface IUser {
     hashPassword: HashPassword;
     /** パスワードをハッシュ化させる際に使用したsalt */
     salt: Salt;
-    /** 変更不可能な名前 */
+    /** ユーザー名 */
     name: UserName;
-    /** 変更可能な名前 */
-    nickname: UserNickName;
-    /** 住所 */
-    location: string;
     /** 自己紹介 */
     self_introduction: string;
     /** 削除フラグ */

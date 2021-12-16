@@ -3,6 +3,11 @@ import { CONTENT_TYPE_APPLICATION_JSON } from "../config/config";
 
 export abstract class Api {
     constructor(protected req: Request, protected res: Response, protected next: NextFunction) { }
+
+
+    /**
+     * content-typeがapplication/jsonではない場合はthrowする
+     */
     protected checkContentType() {
         const contentType = this.req.headers['content-type'];
         if (contentType !== CONTENT_TYPE_APPLICATION_JSON) {

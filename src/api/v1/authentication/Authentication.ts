@@ -9,9 +9,9 @@ export class Authentication {
         const router = Router();
 
         // ログイン
-        router.post('/', (req, res, next) => new SignIn(req, res, next).main());
+        router.post('/', (req, res, next) => new SignIn(req, res, next).main().catch(next));
         // ログアウト
-        router.delete('/', (req, res, next) => new SignOut(req, res, next).main());
+        router.delete('/', (req, res, next) => new SignOut(req, res, next).main().catch(next));
 
         return router;
     }

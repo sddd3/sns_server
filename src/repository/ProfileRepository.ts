@@ -8,7 +8,7 @@ export class ProfileRepository extends Model implements IProfileRepository {
 
     public async create(params: string[]): Promise<boolean> {
         try {
-            const sql = 'INSERT INTO profiles (uuid, name, nickname) VALUES (?, ?, ?)';
+            const sql = 'INSERT INTO profiles (uuid, name) VALUES (?, ?, ?)';
             await this.connection.beginTransaction();
             const [rows] = await this.connection.execute(sql, params);
             await this.connection.commit();

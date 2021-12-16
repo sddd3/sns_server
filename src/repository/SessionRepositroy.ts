@@ -1,6 +1,6 @@
-import { SessionId } from "../domainObjects/User/SessionId";
+import { SessionId } from "../domainObjects/user/SessionId";
 import { Redis } from "../common/Redis";
-import { Uuid } from "../domainObjects/User/Uuid";
+import { Uuid } from "../domainObjects/user/Uuid";
 import { ISessionRepository } from "../interface/ISessionRepository";
 
 export class SessionRepository extends Redis implements ISessionRepository {

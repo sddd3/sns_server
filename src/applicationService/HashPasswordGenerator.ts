@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import { Salt } from "../domainObjects/User/Salt";
-import { HashPassword } from "../domainObjects/User/HashPassword";
+import { Salt } from "../domainObjects/user/Salt";
+import { HashPassword } from "../domainObjects/user/HashPassword";
 
 export class HashPasswordGenerator {
 

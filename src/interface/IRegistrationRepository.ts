@@ -1,6 +1,6 @@
-import { Uuid } from "../domainObjects/User/Uuid";
+import { Uuid } from "../domainObjects/user/Uuid";
 
-import { Email } from "../domainObjects/User/Email";
+import { Email } from "../domainObjects/user/Email";
 import { Registrations } from "../table/Registrations";
 
 export interface IRegistrationRepository {

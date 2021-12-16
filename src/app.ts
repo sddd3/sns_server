@@ -8,34 +8,31 @@ import Redis from "ioredis";
 
 import { Authentication } from './api/v1/authentication/Authentication';
 import { Registration } from './api/v1/registration/Registration';
-
-
+import { Dashboard } from './api/v1/dashboard/Dashboard';
+import { ApiErrorHandler } from './common/ApiErrorHandler';
 
 const app = express();
-app.use(cors());
-app.use(cors({origin: '*', credentials: true}));
+app.use(cors({ origin: 'http://localhost:3001', credentials: true }));
 app.use(express.json({ limit: '20mb' }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.SESSION_OPTION_SECRET));
 app.use(helmet());
 
 app.set('trust proxy', 1);
 
 const RedisStore = connectRedis(session);
-const redis = new Redis();
+const redis = new Redis(`redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`);
 
 const options: session.SessionOptions = {
-    name: 'sns-sid',
-    secret: 'at5hs',
+    name: process.env.SESSION_OPTION_NAME,
+    secret: process.env.SESSION_OPTION_SECRET,
     resave: false,
     store: new RedisStore({
         client: redis,
-        host: process.env.REDIS_HOST,
-        port: Number(process.env.REDIS_PORT),
         prefix: '',
         disableTouch: true,
     }),
     saveUninitialized: false,
-    rolling: true,
+    rolling: false,
     cookie: { httpOnly: true, secure: false, maxAge: 1000 * 60 * 30 }
 }
 
@@ -44,8 +41,12 @@ app.use(session(options));
 const apiBasePath = '/api/v1';
 app.use(`${apiBasePath}/auth`, new Authentication().router());
 app.use(`${apiBasePath}/register`, new Registration().router());
+app.use(`${apiBasePath}/dashboard`, new Dashboard().router());
 
 // app.use(`${apiBasePath}/user`,);
 // app.use(`${apiBasePath}/profile`,);
+
+app.use(ApiErrorHandler);
+
 
 module.exports = app;

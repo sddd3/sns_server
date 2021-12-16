@@ -2,9 +2,9 @@ import { Email } from '../domainObjects/user/Email';
 import { Model } from '../common/Model';
 import { Uuid } from '../domainObjects/user/Uuid';
 import { Registrations } from '../table/Registrations';
-import { IRegistrationRepository } from '../interface/IRegistrationRepository';
+import { IRegistrationRepository } from 'src/interface/IRegistrationRepository';
 
-export class RegistrationRepository extends Model implements IRegistrationRepository {
+export class DashboardRepository extends Model implements IRegistrationRepository {
     constructor() {
         super();
     }

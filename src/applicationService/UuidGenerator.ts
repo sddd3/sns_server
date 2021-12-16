@@ -1,4 +1,4 @@
-import { Uuid } from '../domainObjects/User/Uuid';
+import { Uuid } from '../domainObjects/user/Uuid';
 import { v4 as uuidv4 } from 'uuid';
 export class UuidGenerator {
 
