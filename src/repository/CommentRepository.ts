@@ -2,15 +2,19 @@ import { Uuid } from "../domainObjects/user/Uuid";
 import { ICommentRepository } from "../interface/ICommentRepository";
 import { Model } from "../common/Model";
 import { Comments } from "../table/Comments";
+import { table } from "console";
 
 export class CommentRepository extends Model implements ICommentRepository {
+
+    private readonly table = 'comments';
+
     constructor() {
         super();
     }
 
     public async create(params: string[]): Promise<boolean> {
         try {
-            const sql = 'INSERT INTO comments (parent_id, uuid, comment) VALUES (?, ?, ?)';
+            const sql = `INSERT INTO ${this.table} (parent_id, uuid, comment) VALUES (?, ?, ?);`;
             await this.connection.beginTransaction();
             const [rows] = await this.connection.execute(sql, params);
             await this.connection.commit();
@@ -18,13 +22,10 @@ export class CommentRepository extends Model implements ICommentRepository {
             return rows ? true : false;
         } catch (error) {
             this.connection.rollback();
-            const code = error.error;
-            switch (code) {
-                case 'ER_DUP_ENTRY':
-                    throw { status: 400, code, message: 'Duplicate entry error.' };
-                default:
-                    throw { status: 500, code, message: 'unexpected DB error.' };
-            }
+            // MySQLが出力したエラーをハンドリグする
+            const code = error.code ? error.code : 'unexpected DB error.';
+            const message = error.message ? error.message : 'unexpected DB error.';
+            throw { status: 500, code, message };
         }
     }
     public async findAll(params: { uuid?: Uuid }) {
@@ -38,18 +39,16 @@ export class CommentRepository extends Model implements ICommentRepository {
                 }
             });
 
-            const sql = 'SELECT * FROM comment WHERE ' + where.join(' AND ') + ';';
+            const sql = `SELECT * FROM ${this.table} WHERE ${where.join(' AND ')};`;
             const [rows] = await this.connection.execute(sql, values);
             const result: Comments = rows[0] ? rows[0] : null;
 
             return result;
         } catch (error) {
             // MySQLが出力したエラーをハンドリグする
-            const code = error.error;
-            switch (code) {
-                default:
-                    throw { status: 500, code, message: 'unexpected DB error.' };
-            }
+            const code = error.code ? error.code : 'unexpected DB error.';
+            const message = error.message ? error.message : 'unexpected DB error.';
+            throw { status: 500, code, message };
         }
     }
     public async findOne(params: { uuid?: Uuid }): Promise<Comments> {
@@ -63,18 +62,16 @@ export class CommentRepository extends Model implements ICommentRepository {
                 }
             });
 
-            const sql = 'SELECT * FROM comment WHERE ' + where.join(' AND ') + ';';
+            const sql = `SELECT * FROM ${this.table} WHERE ${where.join(' AND ')} LIMIT 1;`;
             const [rows] = await this.connection.execute(sql, values);
             const result: Comments = rows[0] ? rows[0] : null;
 
             return result;
         } catch (error) {
             // MySQLが出力したエラーをハンドリグする
-            const code = error.error;
-            switch (code) {
-                default:
-                    throw { status: 500, code, message: 'unexpected DB error.' };
-            }
+            const code = error.code ? error.code : 'unexpected DB error.';
+            const message = error.message ? error.message : 'unexpected DB error.';
+            throw { status: 500, code, message };
         }
     }
     public update() {

@@ -41,6 +41,9 @@ export class SignIn extends Api {
             const cookie = new Cookie(this.req.headers.cookie);
             const credentialsChecker = new CredentialsChecker(cookie);
             const [uuid, sessionId] = await credentialsChecker.checkCredentials();
+
+            credentialsChecker.compareUudi([uuid, registration.uuid]);
+
             await sessionApplicationService.reGenerate(this.req.session, registration.uuid, sessionId);
             sessionApplicationService.registrationUuid(this.req.session, registration.uuid);
             // this.req.session.regenerate(error => {

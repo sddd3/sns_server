@@ -3,6 +3,7 @@ import { SessionRepository } from "../repository/SessionRepositroy";
 import { CredentialsResult } from "../types/CredentialsResult";
 import { CookieApplicationService } from "../applicationService/CookieApplicationService";
 import { SessionApplicationService } from "../applicationService/SessionApplicationService";
+import { Uuid } from "src/domainObjects/user/Uuid";
 
 export class CredentialsChecker {
 
@@ -27,7 +28,12 @@ export class CredentialsChecker {
         // cookieに格納されている情報でRedisからセッション情報を取得できない場合はエラー
         if (!session) { throw { status: 400, message: 'authentication error.' } }
 
-        const uuid = await sessionApplicationService.getUuid(session);
+        const uuid = sessionApplicationService.getUuid(session);
         return [uuid, sessionId];
+    }
+
+    public compareUudi(uuids: Uuid[]): void {
+        const [targetA, targetB] = uuids;
+        if (targetA.value !== targetB.value) { throw { status: 500, message: '比較対象のuuidが異なる' } }
     }
 }
