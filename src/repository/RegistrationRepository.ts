@@ -30,12 +30,12 @@ export class RegistrationRepository extends Model implements IRegistrationReposi
         }
     }
 
-    public async findAll(params: { uuid?: Uuid, email?: Email }): Promise<Registrations[]> {
+    public async findAll(params: {}): Promise<Registrations[]> {
         const result: Registrations[] = [];
         return result;
     }
 
-    public async findOne(params: { uuid?: Uuid, email?: Email }): Promise<Registrations> {
+    public async findOne(params: {}): Promise<Registrations> {
         try {
             const where: string[] = [];
             const values: string[] = [];

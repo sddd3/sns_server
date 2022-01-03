@@ -14,6 +14,19 @@ export class RegistrationApplicationService {
     }
 
     /**
+     * 既に同じemailでユーザーが登録されていないか確認する
+     * @param email ユーザー登録に使用するemail
+     * @returns true: 既に登録されている false: 未登録
+     */
+    public async exsistingUser(email: Email): Promise<boolean> {
+        const params = { email: email };
+        await this.repository.createDbConnection();
+        const result = await this.repository.findOne(params);
+
+        return result ? true : false;
+    }
+
+    /**
      * 新規アカウントを作成する
      * @param uuid ユーザーを一意に決定するためのID
      * @param email ユーザー登録に使用したメールアドレス

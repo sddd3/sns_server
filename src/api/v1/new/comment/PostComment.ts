@@ -6,8 +6,8 @@ import { ParentId } from '../../../../domainObjects/dashobard/ParentId';
 import { Comment } from '../../../../domainObjects/dashobard/Comment';
 import { Uuid } from '../../../../domainObjects/user/Uuid';
 import { Api } from '../../../../common/Api';
-import { Cookie } from 'src/domainObjects/user/Cookie';
-import { CredentialsChecker } from 'src/common/CredentialsChecker';
+import { Cookie } from '../../../../domainObjects/user/Cookie';
+import { CredentialsChecker } from '../../../../common/CredentialsChecker';
 
 export class PostComment extends Api {
     constructor(req: Request, res: Response, next: NextFunction) { super(req, res, next); }
@@ -25,12 +25,13 @@ export class PostComment extends Api {
         /** リクエストボディからコメントを取得 */
         const comment = new Comment(request.comment);
         /** コメントに対する返信の場合、親となるコメントのIDが入る */
-        const parentId = new ParentId(request.parent_id);
-        /** セッション情報を元にUUIDを取得する */
+        const parentId = request.parent_id ? new ParentId(request.parent_id) : new ParentId(uuid.value);
 
+        /** セッション情報を元にUUIDを取得する */
         const commentRepository = new CommentRepository();
         const commentApplicationRepository = new CommentApplicationService(commentRepository);
-        commentApplicationRepository.create(parentId, uuid, comment);
+        const result = await commentApplicationRepository.create(parentId, uuid, comment);
+        console.log(`result: ${result}`);
 
         this.res.status(200).end();
     }

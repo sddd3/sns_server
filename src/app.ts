@@ -10,6 +10,7 @@ import { Authentication } from './api/v1/authentication/Authentication';
 import { Registration } from './api/v1/registration/Registration';
 import { Dashboard } from './api/v1/dashboard/Dashboard';
 import { ApiErrorHandler } from './common/ApiErrorHandler';
+import { New } from './api/v1/new/New';
 
 const app = express();
 app.use(cors({ origin: 'http://localhost:3001', credentials: true }));
@@ -42,6 +43,7 @@ const apiBasePath = '/api/v1';
 app.use(`${apiBasePath}/auth`, new Authentication().router());
 app.use(`${apiBasePath}/register`, new Registration().router());
 app.use(`${apiBasePath}/dashboard`, new Dashboard().router());
+app.use(`${apiBasePath}/new`, new New().router());
 
 // app.use(`${apiBasePath}/user`,);
 // app.use(`${apiBasePath}/profile`,);

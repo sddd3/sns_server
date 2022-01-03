@@ -43,6 +43,10 @@ export class Register extends Api {
         // 新規ユーザー登録
         const registrationRepository = new RegistrationRepository();
         const registrationApplicationService = new RegistrationApplicationService(registrationRepository);
+
+        const result = await registrationApplicationService.exsistingUser(email);
+        if (result) { throw { status: 400, message: 'already exist' } }
+
         await registrationApplicationService.create(uuid, email, hashPassword, salt);
         // プロフィール情報のnullが許されないカラムだけ先行して登録
         const profileRepository = new ProfileRepository();

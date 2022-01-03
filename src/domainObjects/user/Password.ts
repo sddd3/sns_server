@@ -6,16 +6,11 @@ export class Password {
 
     constructor(value: string) {
         // 値の存在チェック
-        if (value === null || value === undefined) { throw { status: 400, message: 'Password is invalid.' } }
-        // パスワードとして登録しようとしている文字列の文字数がPASSWORD_MIN_LENGTH以下だった場合エラー
-        if (value.length < PASSWORD_MIN_LENGTH) { throw { status: 400, message: 'Password is too short.' } }
+        if (value === null || value === undefined) { throw { status: 422, message: 'Invalid password' } }
+        // パスワードとして登録しようとしている文字列の文字数がPASSWORD_MIN_LENGTH未満だった場合エラー
+        if (value.length < PASSWORD_MIN_LENGTH) { throw { status: 422, message: 'Invalid input - password should be at least 8 characters long.' } }
         // パスワードとして登録しようとしている文字列の文字数がPASSWORD_MAX_LENGTH以上だった場合エラー
-        if (PASSWORD_MAX_LENGTH < value.length) { throw { status: 400, message: 'Password is too long.' } }
-        if (value === null || value === undefined) { throw { status: 400, message: 'Password is invalid.' } }
-        // パスワードとして登録しようとしている文字列の文字数がPASSWORD_MIN_LENGTH以下だった場合エラー
-        if (value.length < PASSWORD_MIN_LENGTH) { throw { status: 400, message: 'Password is too short.' } }
-        // パスワードとして登録しようとしている文字列の文字数がPASSWORD_MAX_LENGTH以上だった場合エラー
-        if (PASSWORD_MAX_LENGTH < value.length) { throw { status: 400, message: 'Password is too long.' } }
+        if (PASSWORD_MAX_LENGTH < value.length) { throw { status: 422, message: 'Invalid input - password should be less than 32 characters short.' } }
 
         this.value = value;
     }
