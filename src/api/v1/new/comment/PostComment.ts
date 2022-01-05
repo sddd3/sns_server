@@ -19,7 +19,7 @@ export class PostComment extends Api {
         const credentialsChecker = new CredentialsChecker(cookie);
         const [cookieUuid] = await credentialsChecker.checkCredentials();
         const uuid = new Uuid(this.req.session.uuid);
-        credentialsChecker.compareUudi([uuid, cookieUuid]);
+        credentialsChecker.compareUudi(uuid, cookieUuid);
 
         const request: IPostCommentRequest = this.req.body;
         /** リクエストボディからコメントを取得 */

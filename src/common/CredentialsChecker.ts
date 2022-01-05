@@ -32,8 +32,7 @@ export class CredentialsChecker {
         return [uuid, sessionId];
     }
 
-    public compareUudi(uuids: Uuid[]): void {
-        const [targetA, targetB] = uuids;
+    public compareUudi(targetA: Uuid, targetB: Uuid): void {
         if (targetA.value !== targetB.value) { throw { status: 500, message: '比較対象のuuidが異なる' } }
     }
 }
