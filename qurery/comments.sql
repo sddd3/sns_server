@@ -1,6 +1,6 @@
 CREATE TABLE comments (
     `comment_id` BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
-    `parent_id` BIGINT UNSIGNED,
+    `parent_id` BIGINT UNSIGNED NULL,
     `uuid` VARCHAR(100) NOT NULL,
     `comment` VARCHAR(100),
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

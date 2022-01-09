@@ -1,4 +1,5 @@
 export interface IPostCommentRequest {
-    parent_id?: string,
+    parent_id?: number,
+    comment_id?: number,
     comment: string;
 };

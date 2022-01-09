@@ -1,8 +1,8 @@
 export class ParentId {
 
-    readonly value: string;
+    readonly value: number;
 
-    constructor(value: string = null) {
+    constructor(value: number = null) {
         this.value = value;
     }
 }

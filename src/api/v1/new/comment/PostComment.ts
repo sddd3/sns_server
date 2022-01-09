@@ -25,8 +25,8 @@ export class PostComment extends Api {
         /** リクエストボディからコメントを取得 */
         const comment = new Comment(request.comment);
         /** コメントに対する返信の場合、親となるコメントのIDが入る */
-        const parentId = request.parent_id ? new ParentId(request.parent_id) : new ParentId(uuid.value);
-
+        const parentId = request.parent_id ? new ParentId(request.parent_id) : new ParentId();
+        console.log(`parentId: ${parentId.value}`)
         /** セッション情報を元にUUIDを取得する */
         const commentRepository = new CommentRepository();
         const commentApplicationRepository = new CommentApplicationService(commentRepository);

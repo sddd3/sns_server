@@ -3,7 +3,7 @@ import { Comment } from "../domainObjects/dashobard/Comment";
 import { Uuid } from "../domainObjects/user/Uuid";
 
 import { CommentRepository } from "../repository/CommentRepository";
-import { Comments } from "../table/Comments";
+import { IMysqlResult } from "../interface/IMysqlResult";
 
 export class CommentApplicationService {
     /** 登録情報リポジトリー */
@@ -26,7 +26,7 @@ export class CommentApplicationService {
         return result;
     }
 
-    public async findAll(uuid: Uuid): Promise<Comments> {
+    public async findAll(uuid: Uuid): Promise<IMysqlResult> {
         const params = { uuid };
 
         await this.repository.createDbConnection();
