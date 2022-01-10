@@ -40,7 +40,8 @@ export class CommentRepository extends Model implements ICommentRepository {
                 }
             });
 
-            const sql = `SELECT * FROM ${this.table} WHERE ${where.join(' AND ')};`;
+            const select = ['comment_id', 'parent_id', 'comment', 'created_at', 'updated_at'];
+            const sql = `SELECT ${[...select]} FROM ${this.table} WHERE ${where.join(' AND ')};`;
             const [result] = await this.connection.execute(sql, values);
             await this.connection.end();
 
@@ -64,7 +65,8 @@ export class CommentRepository extends Model implements ICommentRepository {
                 }
             });
 
-            const sql = `SELECT * FROM ${this.table} WHERE ${where.join(' AND ')} LIMIT 1;`;
+            const select = ['comment_id', 'parent_id', 'comment', 'created_at', 'updated_at'];
+            const sql = `SELECT ${[...select]} FROM ${this.table} WHERE ${where.join(' AND ')} LIMIT 1;`;
             const [rows] = await this.connection.execute(sql, values);
             const result: Comments = rows[0] ? rows[0] : null;
 

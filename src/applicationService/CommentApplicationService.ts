@@ -27,7 +27,7 @@ export class CommentApplicationService {
     }
 
     public async findAll(uuid: Uuid): Promise<IMysqlResult> {
-        const params = { uuid };
+        const params = { uuid, delete_flg: 0 };
 
         await this.repository.createDbConnection();
         const result = await this.repository.findAll(params);
