@@ -20,13 +20,9 @@ export class RegistrationRepository extends Model implements IRegistrationReposi
         } catch (error) {
             // MySQLが出力したエラーをハンドリグする
             this.connection.rollback();
-            const code = error.code;
-            switch (code) {
-                case 'ER_DUP_ENTRY':
-                    throw { status: 400, code, message: 'Duplicate entry error.' };
-                default:
-                    throw { status: 500, code, message: 'unexpected DB error.' };
-            }
+            // MySQLが出力したエラーをハンドリグする
+            const responseObj = this.errorHandler(error);
+            throw responseObj;
         }
     }
 
@@ -46,18 +42,17 @@ export class RegistrationRepository extends Model implements IRegistrationReposi
                 }
             });
 
-            const sql = 'SELECT * FROM registrations WHERE ' + where.join(' AND ') + ';';
+            const select = ['*'];
+            const sql = `SELECT ${[...select]} FROM registrations WHERE ${where.join(' AND ')};`;
             const [rows] = await this.connection.execute(sql, values);
             const result: Registrations = rows[0] ? rows[0] : null;
 
             return result;
         } catch (error) {
             // MySQLが出力したエラーをハンドリグする
-            const code = error.error;
-            switch (code) {
-                default:
-                    throw { status: 500, code, message: 'unexpected DB error.' };
-            }
+            // MySQLが出力したエラーをハンドリグする
+            const responseObj = this.errorHandler(error);
+            throw responseObj;
         }
     }
     public update() {

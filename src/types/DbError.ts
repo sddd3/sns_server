@@ -1,0 +1,1 @@
+export type DbError = { status: number, code: string, message: string };

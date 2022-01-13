@@ -18,15 +18,15 @@ export class CommentRepository extends Model implements ICommentRepository {
             await this.connection.beginTransaction();
             const [rows] = await this.connection.execute(sql, params);
             await this.connection.commit();
-            await this.connection.end();
+
             return rows ? true : false;
         } catch (error) {
             this.connection.rollback();
-            await this.connection.end();
             // MySQLが出力したエラーをハンドリグする
-            const code = error.code ? error.code : 'unexpected DB error.';
-            const message = error.message ? error.message : 'unexpected DB error.';
-            throw { status: 500, code, message };
+            const responseObj = this.errorHandler(error);
+            throw responseObj;
+        } finally {
+            await this.connection.end();
         }
     }
     public async findAll(params: { uuid?: Uuid }): Promise<IMysqlResult> {
@@ -43,15 +43,14 @@ export class CommentRepository extends Model implements ICommentRepository {
             const select = ['comment_id', 'parent_id', 'comment', 'created_at', 'updated_at'];
             const sql = `SELECT ${[...select]} FROM ${this.table} WHERE ${where.join(' AND ')};`;
             const [result] = await this.connection.execute(sql, values);
-            await this.connection.end();
 
             return result;
         } catch (error) {
-            await this.connection.end();
             // MySQLが出力したエラーをハンドリグする
-            const code = error.code ? error.code : 'unexpected DB error.';
-            const message = error.message ? error.message : 'unexpected DB error.';
-            throw { status: 500, code, message };
+            const responseObj = this.errorHandler(error);
+            throw responseObj;
+        } finally {
+            await this.connection.end();
         }
     }
     public async findOne(params: { uuid?: Uuid }): Promise<Comments> {
@@ -74,9 +73,10 @@ export class CommentRepository extends Model implements ICommentRepository {
         } catch (error) {
             await this.connection.end();
             // MySQLが出力したエラーをハンドリグする
-            const code = error.code ? error.code : 'unexpected DB error.';
-            const message = error.message ? error.message : 'unexpected DB error.';
-            throw { status: 500, code, message };
+            const responseObj = this.errorHandler(error);
+            throw responseObj;
+        } finally {
+            await this.connection.end();
         }
     }
     public update() {
