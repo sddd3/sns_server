@@ -46,12 +46,6 @@ export class SignIn extends Api {
 
             await sessionApplicationService.reGenerate(this.req.session, registration.uuid, sessionId);
             sessionApplicationService.registrationUuid(this.req.session, registration.uuid);
-            // this.req.session.regenerate(error => {
-            //     if (error) { throw { status: 500, message: `session regenerate error.` } };
-            //     sessionApplicationService.registrationUuid(this.req.session, registration.uuid);
-            //     this.req.session.save();
-            //     this.res.status(200).end();
-            // });
         } else {
             sessionApplicationService.registrationUuid(this.req.session, registration.uuid);
         }
