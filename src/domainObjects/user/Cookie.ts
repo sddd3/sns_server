@@ -3,7 +3,7 @@ export class Cookie {
     readonly value: string;
 
     constructor(value: string) {
-        if (!value) { throw { status: 400, message: 'cookie is empty.' } };
+        if (!value) { throw { status: 403, message: 'cookie is empty.' } };
         if (!this.validate(value)) { throw { status: 400, message: 'cookie is validate Error.' } };
 
         this.value = value;

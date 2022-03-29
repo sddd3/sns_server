@@ -18,9 +18,6 @@ export class GetDashboard extends Api {
         const commentRepository = new CommentRepository();
         const commentApplicationService = new CommentApplicationService(commentRepository);
         const comments = await commentApplicationService.findAll(uuid);
-        console.log(`--------------------------------------------------------------------------`);
-        console.log(`comments: ${JSON.stringify(comments)}`);
-        console.log(`--------------------------------------------------------------------------`);
 
         this.res.status(200).json({ comments }).end();
     }

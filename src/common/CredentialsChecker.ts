@@ -26,7 +26,7 @@ export class CredentialsChecker {
         const session = await sessionApplicationService.getSession(sessionId);
 
         // cookieに格納されている情報でRedisからセッション情報を取得できない場合はエラー
-        if (!session) { throw { status: 400, message: 'authentication error.' } }
+        if (!session) { throw { status: 403, message: 'authentication error.' } }
 
         const uuid = sessionApplicationService.getUuid(session);
         return [uuid, sessionId];
